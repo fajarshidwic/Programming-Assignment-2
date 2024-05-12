@@ -64,6 +64,7 @@ class Node
 {
 public:
     Node();
+    Node(FoodItem* item, Node* next = nullptr);
     ~Node();
     // pointer to the data held for the node 
     FoodItem* data;
