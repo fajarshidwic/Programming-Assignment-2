@@ -11,6 +11,16 @@ public:
 
     // more functions to be added perhaps...
 
+    void addFront(FoodItem* data);
+    void addBack(FoodItem* data);
+    void addAt(FoodItem* data, unsigned index);
+
+    void removeFront();
+    void removeBack();
+    void removeAt(unsigned index);
+
+    void printItems();
+
 private:
     // the beginning of the list
     Node* head;

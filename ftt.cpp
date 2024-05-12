@@ -8,6 +8,8 @@ using std::cin;
 
 void printMainMenu();
 
+void useLinkedList();
+
 /**
  * manages the running of the program, initialises data structures, loads
  * data, display the main menu, and handles the processing of options. 
@@ -19,6 +21,7 @@ int main(int argc, char **argv)
     // TODO
 
     cout << "Just a test, nothing implemented yet!" << endl;
+    useLinkedList();
 
     return EXIT_SUCCESS;
 }
@@ -44,3 +47,27 @@ void printMainMenu() {
 
 }
 
+// delete this function in the final code
+void useLinkedList() {
+    FoodItem* item1 = new FoodItem("I0001", "Burger", "A cheese burger", 12.99, 10);
+    FoodItem* item2 = new FoodItem("I0002", "Pizza", "A big pizza", 15.99, 10);
+    FoodItem* item3 = new FoodItem("I0003", "Tea", "Black tea", 6.75, 10);
+    FoodItem* item4 = new FoodItem("I0004", "Fruit", "any fruit", 0.95, 10);
+    FoodItem* item5 = new FoodItem("I0005", "Apple Pie", "description", 1.5, 100);
+
+    LinkedList list;
+
+    list.addFront(item1);
+    list.addBack(item2);
+    list.addFront(item3);
+    list.addBack(item4);
+    list.addAt(item5, 2);
+    list.addFront(new FoodItem("I0006", "Lemon Tart", "description", 3.75)); 
+    list.printItems();
+
+    list.removeBack();
+    list.removeFront();
+    list.removeAt(2);
+   
+    list.printItems();
+}
