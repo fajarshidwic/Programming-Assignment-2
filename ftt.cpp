@@ -23,7 +23,9 @@ int main(int argc, char **argv)
     return EXIT_SUCCESS;
 }
 
-
+/**
+ * Prints the main menu of the vending machine
+**/
 void printMainMenu() {
 
     cout << "Main Menu:" << endl;
