@@ -1,8 +1,12 @@
 #include "Node.h"
 
 Node::Node(){
-    // TODO
+    data = nullptr;
+    next = nullptr;
 };
+
+Node::Node(FoodItem* item, Node* next)
+: data(data), next(next) {}
+
 Node::~Node(){
-    // TODO
 };
