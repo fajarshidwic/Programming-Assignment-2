@@ -1,11 +1,22 @@
-#include "LinkedList.h"
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
+#include "Node.h"
 
-LinkedList::LinkedList() {
-   head = nullptr;
 
-   // TODO
-}
+class LinkedList
+{
+public:
+    LinkedList();
+    ~LinkedList();
 
-LinkedList::~LinkedList() {
-    // TODO
-}
+    // more functions to be added perhaps...
+
+private:
+    // the beginning of the list
+    Node* head;
+  
+    // how many nodes are there in the list?
+    unsigned count;
+};
+
+#endif  // LINKEDLIST_H
