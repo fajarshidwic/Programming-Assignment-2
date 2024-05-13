@@ -1,5 +1,6 @@
 #ifndef COIN_H
 #define COIN_H
+#include <string>
 
 // Coin.h defines the coin structure for managing currency in the system. 
 #define DELIM ","  // delimiter 
@@ -8,7 +9,7 @@
 enum Denomination
 {
     FIVE_CENTS, TEN_CENTS, TWENTY_CENTS, FIFTY_CENTS, ONE_DOLLAR, 
-    TWO_DOLLARS, FIVE_DOLLARS, TEN_DOLLARS, TWENTY_DOLLARS
+    TWO_DOLLARS, FIVE_DOLLARS, TEN_DOLLARS, TWENTY_DOLLARS, ERROR
 };
 
 
@@ -22,6 +23,12 @@ public:
     
     // the count of how many of these are in the cash register
     unsigned count;
+
+    // sorts the array from low to high.
+    void sortCoins(Coin*);
+
+    // reads string and changes it to denomination.
+    Denomination string_to_denomination(std::string& str);
 };
 
 #endif // COIN_H
