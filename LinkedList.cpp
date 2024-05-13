@@ -8,18 +8,27 @@ using std::cout;
 using std::endl;
 
 LinkedList::LinkedList() {
-   head = nullptr;
-
-   // TODO
+    head = nullptr;
+    count = 0;
 }
 
 LinkedList::~LinkedList() {
-    // TODO
+    Node* current = head;
+    Node* next = nullptr;
+
+    while (current != nullptr) {
+        next = current->next;
+        delete current->data;
+        delete current;
+        current = next;
+    }
+    delete[] purse;
 }
 
 void LinkedList::addFront(FoodItem* data) {
     Node* newNode = new Node(data, head);
     this->head = newNode;
+    count ++;
 }
 
 void LinkedList::addBack(FoodItem* data) {
@@ -33,6 +42,7 @@ void LinkedList::addBack(FoodItem* data) {
     } else {
         head = newNode;
     }
+    count ++;
 }
 
 void LinkedList::addAt(FoodItem* data, unsigned index) {
@@ -50,6 +60,7 @@ void LinkedList::addAt(FoodItem* data, unsigned index) {
             }
             newNode->next = current->next;
             current->next = newNode;
+            count ++;
         }
     } else {
         throw std::runtime_error("Index out of range");
@@ -62,6 +73,7 @@ void LinkedList::removeFront() {
         head = head->next;
         delete temp->data;
         delete temp;
+        count--;
     } else {
         throw std::runtime_error("Can't remove from an empty LinkedList");
     }
@@ -79,6 +91,7 @@ void LinkedList::removeBack() {
             delete current->next->data;
             delete current->next;
             current->next = nullptr;
+            count--;
         }
     } else {
         throw std::runtime_error("Can't remove from an empty LinkedList");
@@ -100,6 +113,7 @@ void LinkedList::removeAt(unsigned index) {
             current->next = toRemove->next;
             delete toRemove->data;
             delete toRemove;
+            count--;
         }
     } else {
         throw std::runtime_error("Index out of range");
@@ -112,18 +126,23 @@ void LinkedList::printItems() {
     cout << "----------" << endl;
     cout << "ID   |Name                                    | Available | Price" << endl;
     cout << "-----------------------------------------------------------------" << endl;
-    for (unsigned i=0; i<count; ++i) {
-        cout << std::left << std::setw(5) << current->data->id
-            << "|" << std::setw(40) << current->data->name
-            << "|" << std::setw(11) << current->data->on_hand
-            << "|$";
-        if (current->data->price.dollars < 10) {
-            cout << " ";
-        }
-        cout << current->data->price.dollars << '.' << std::setw(2) << std::setfill('0') << current->data->price.cents
-            << std::setfill(' ')
-            << endl;
-        current = current->next;
-    }
-    
+    // for (unsigned i=0; i<count; ++i) {
+    //     cout << std::left << std::setw(5) << current->data->id
+    //         << "|" << std::setw(40) << current->data->name
+    //         << "|" << std::setw(11) << current->data->on_hand
+    //         << "|$";
+    //     if (current->data->price.dollars < 10) {
+    //         cout << " ";
+    //     }
+    //     cout << current->data->price.dollars << '.' << std::setw(2) << std::setfill('0') << current->data->price.cents
+    //         << std::setfill(' ')
+    //         << endl;
+    //     current = current->next;
+    // }
+    cout << current->data->id << endl;
+    cout << current->data->name << endl;
+    // cout << current->data->on_hand << endl;
+    cout << current->data->description << endl;
+    // cout << current->data->price.dollars << endl;
+
 }

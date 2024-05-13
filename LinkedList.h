@@ -9,6 +9,8 @@ public:
     LinkedList();
     ~LinkedList();
 
+    Coin* purse;
+
     // more functions to be added perhaps...
 
     void addFront(FoodItem* data);
