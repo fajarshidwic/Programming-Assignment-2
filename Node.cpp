@@ -1,7 +1,7 @@
 #include "Node.h"
 
-FoodItem::FoodItem(std::string id, std::string name, std::string description, double price, unsigned on_hand)
-: id(id), name(name), description(description), on_hand(on_hand) {}
+FoodItem::FoodItem(std::string id, std::string name, std::string description, Price price, unsigned on_hand)
+: id(id), name(name), description(description), price(price), on_hand(on_hand) {}
 
 FoodItem::~FoodItem(){
 };
