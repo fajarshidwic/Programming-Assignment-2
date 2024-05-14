@@ -121,28 +121,59 @@ void LinkedList::removeAt(unsigned index) {
 }
 
 void LinkedList::printItems() {
+    if (head == nullptr) {
+        cout << "Linked list is empty" << endl;
+        return;
+    }
+
     Node* current = head;
+    // Node* current2 = head;
+    // while (current != nullptr) {
+    //     if (current->data == nullptr) {
+    //         cout << "Error: Data pointer in node is nullptr" << endl;
+    //         return;
+    //     }
+        
+    //     cout << current->data->id << endl;
+    //     cout << current->data->name << endl;
+    //     current = current->next;
+    // }
     cout << "Items Menu" << endl;
     cout << "----------" << endl;
     cout << "ID   |Name                                    | Available | Price" << endl;
     cout << "-----------------------------------------------------------------" << endl;
-    // for (unsigned i=0; i<count; ++i) {
-    //     cout << std::left << std::setw(5) << current->data->id
-    //         << "|" << std::setw(40) << current->data->name
-    //         << "|" << std::setw(11) << current->data->on_hand
-    //         << "|$";
-    //     if (current->data->price.dollars < 10) {
-    //         cout << " ";
-    //     }
-    //     cout << current->data->price.dollars << '.' << std::setw(2) << std::setfill('0') << current->data->price.cents
-    //         << std::setfill(' ')
-    //         << endl;
-    //     current = current->next;
+    while (current != nullptr) {
+        cout << "while (current != nullptr) passed" << endl;
+        if (current->data == nullptr) {
+            cout << "Error: Data pointer in node is nullptr" << endl;
+            return;
+        }
+
+        cout << std::left << std::setw(5) << current->data->id
+            << "|" << std::setw(40) << current->data->name
+            // << "|" << std::setw(11) << current->data->on_hand
+            << "|$";
+        if (current->data->price.dollars < 10) {
+            cout << " ";
+        }
+        // cout << current->data->price.dollars << '.' << std::setw(2) << std::setfill('0') << current->data->price.cents
+        //     << std::setfill(' ')
+        //     << endl;
+        current = current->next;
+    }
+    // cout << current->data->id << endl;
+    // cout << current->data->name << endl;
+    // // cout << current->data->on_hand << endl;
+    // cout << current->data->description << endl;
+    // if (current->data->price.dollars < 10) {
+    //     cout << " ";
     // }
-    cout << current->data->id << endl;
-    cout << current->data->name << endl;
-    // cout << current->data->on_hand << endl;
-    cout << current->data->description << endl;
+    // cout << current->data->price.dollars << '.' << std::setw(2) << std::setfill('0') << current->data->price.cents
+    //     << std::setfill(' ')
+    //     << endl;
+    // current = current->next;
+    // cout << current->data->price.dollars << "." << current->data->price.cents << endl;
     // cout << current->data->price.dollars << endl;
+    // cout << current->data->price.dollars << current->data->price.cents << endl;
 
 }

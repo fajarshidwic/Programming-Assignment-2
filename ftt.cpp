@@ -64,7 +64,8 @@ bool loadItem(char **argv, LinkedList& vendingMachine){
    if (myfile.is_open()) {
       while (getline(myfile, foodLine)) {
             // Local variables
-            string food_id, food_name, food_desc, food_price;
+            string food_id, food_name, food_desc;
+            double food_price;
             int food_stock;
             // Split string function by delimter.
             std::vector<std::string> foodTokens;
@@ -74,24 +75,41 @@ bool loadItem(char **argv, LinkedList& vendingMachine){
             food_id = foodTokens[0];
             food_name = foodTokens[1];
             food_desc = foodTokens[2];
+            // food_price = foodTokens[3];
+
+            // // convert the food_price into token based on delimeter '.' and create new Price object
+
+            // std::vector<std::string> priceTokens;
+            // string priceDelimiter = ".";
+            // splitString(food_price, priceTokens, priceDelimiter);
+
+            // unsigned int dollars = atoi(priceTokens[0].c_str());
+            // unsigned int cents = atoi(priceTokens[1].c_str());
+
+            // Price foodPrice = Price{dollars, cents};
             food_price = std::stod(foodTokens[3]);
-
-            // convert the food_price into token based on delimeter '.' and create new Price object
-
-            std::vector<std::string> priceTokens;
-            string priceDelimiter = ".";
-            splitString(food_price, priceTokens, priceDelimiter);
-
-            unsigned int dollars = atoi(priceTokens[0].c_str());
-            unsigned int cents = atoi(priceTokens[1].c_str());
-
-            Price foodPrice = Price{dollars, cents};
             food_stock = std::stoi(foodTokens[4]);
 
+            cout << "Creating FoodItem:" << endl;
+            cout << "food_id: " << food_id << endl;
+            cout << "food_name: " << food_name << endl;
+            cout << "food_desc: " << food_desc << endl;
+            cout << "food_price: " << food_price << endl;
+            cout << "food_stock: " << food_stock << endl;
+            cout << endl;
+
             // Create node
-            FoodItem* item = new FoodItem(food_id, food_name, food_desc, foodPrice, food_stock);
+            FoodItem* item = new FoodItem(food_id, food_name, food_desc, food_price, food_stock);
             // Append node to end of linked list
             vendingMachine.addBack(item);
+
+            // Debug specific properties
+            cout << "FoodItem properties:" << endl;
+            cout << "ID: " << item->id << endl;
+            cout << "Name: " << item->name << endl;
+            cout << "Description: " << item->description << endl;
+            cout << "Price: " << item->price.dollars << "." << item->price.cents << endl;
+            cout << "Stock: " << item->on_hand << endl;
       }
       // Failed to open
       myfile.close();
@@ -167,26 +185,26 @@ void printMainMenu() {
 }
 
 // delete this function in the final code
-void useLinkedList() {
-    FoodItem* item1 = new FoodItem("I0001", "Burger", "A cheese burger", 12.99, 10);
-    FoodItem* item2 = new FoodItem("I0002", "Pizza", "A big pizza", 15.99, 10);
-    FoodItem* item3 = new FoodItem("I0003", "Tea", "Black tea", 6.75, 10);
-    FoodItem* item4 = new FoodItem("I0004", "Fruit", "any fruit", 0.95, 10);
-    FoodItem* item5 = new FoodItem("I0005", "Apple Pie", "description", 1.5, 100);
+// void useLinkedList() {
+//     FoodItem* item1 = new FoodItem("I0001", "Burger", "A cheese burger", 12.99, 10);
+//     FoodItem* item2 = new FoodItem("I0002", "Pizza", "A big pizza", 15.99, 10);
+//     FoodItem* item3 = new FoodItem("I0003", "Tea", "Black tea", 6.75, 10);
+//     FoodItem* item4 = new FoodItem("I0004", "Fruit", "any fruit", 0.95, 10);
+//     FoodItem* item5 = new FoodItem("I0005", "Apple Pie", "description", 1.5, 100);
 
-    LinkedList list;
+//     LinkedList list;
 
-    list.addFront(item1);
-    list.addBack(item2);
-    list.addFront(item3);
-    list.addBack(item4);
-    list.addAt(item5, 2);
-    list.addFront(new FoodItem("I0006", "Lemon Tart", "description", 3.75)); 
-    list.printItems();
+//     list.addFront(item1);
+//     list.addBack(item2);
+//     list.addFront(item3);
+//     list.addBack(item4);
+//     list.addAt(item5, 2);
+//     list.addFront(new FoodItem("I0006", "Lemon Tart", "description", 3.75)); 
+//     list.printItems();
 
-    list.removeBack();
-    list.removeFront();
-    list.removeAt(2);
+//     list.removeBack();
+//     list.removeFront();
+//     list.removeAt(2);
    
-    list.printItems();
-}
+//     list.printItems();
+// }

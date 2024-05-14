@@ -56,7 +56,8 @@ public:
     // how many of this food item do we have on hand? 
     unsigned on_hand;    
 
-    FoodItem(std::string id="", std::string name="", std::string description="", Price price=Price{0,0}, unsigned on_hand=DEFAULT_FOOD_STOCK_LEVEL);
+    // FoodItem(std::string id="", std::string name="", std::string description="", Price price=Price{0,0}, unsigned on_hand=DEFAULT_FOOD_STOCK_LEVEL);
+    FoodItem(std::string id="", std::string name="", std::string description="", double price=0, unsigned on_hand=DEFAULT_FOOD_STOCK_LEVEL);
     ~FoodItem();
 };
 
