@@ -22,6 +22,7 @@ void useLinkedList();
 
 bool loadItem(char **argv, LinkedList& vendingMachine);
 void splitString(string s, vector<string>& tokens, string delimiter);
+string readInput();
 
 bool addFoodItem(LinkedList& vendingMachine);
 bool removeFoodItem(LinkedList& vendingMachine);
@@ -54,12 +55,68 @@ int main(int argc, char **argv)
         allowedArgs = loadItem(argv, vendingMachine);
     }
     
+    string choice = "-1";
     bool exit = false;
 
     while (!std::cin.eof() && !exit && allowedArgs) {
         // useLinkedList();
-        vendingMachine.printItems();
-        exit = true;
+        // vendingMachine.printItems();
+        printMainMenu();
+        choice = readInput();
+
+        if (!std::cin.eof()) {
+            bool isInt = true;
+            // Menu Block
+            if (isInt && choice != "") {
+
+                if (std::stoi(choice) == 1) {
+                    // Display Items
+                    vendingMachine.printItems();
+                    cout << endl;
+
+                } else if (std::stoi(choice) == 2) {
+                    // Purchase Items
+                    // purchaseItem(&vendingMachine);
+                    std::cout << "2" << std::endl;
+                    cin.clear();
+
+                } else if (std::stoi(choice) == 3) {
+                    // Save & Exit
+                    exit = true;
+                    std::cout << "Save and Exit" << std::endl;
+                    // saveItem(outFileName, vendingMachine);
+                    // saveCoin(coinFile, vendingMachine);
+
+                } else if (std::stoi(choice) == 4) {
+                    // Add Item
+                    addFoodItem(vendingMachine);
+                    std::cout << "4" << std::endl;
+                    std::cin.clear();
+
+                } else if (std::stoi(choice) == 5) {
+                    // Remove Item
+                    removeFoodItem(vendingMachine);
+                    std::cout << "5" << std::endl;
+                    cin.clear();
+
+                } else if (std::stoi(choice) == 6) {
+                    // Displayt Coins
+                    // displayCoin(vendingMachine);
+                    std::cout << "6" << std::endl;
+
+                } else if (std::stoi(choice) == 7) {
+                    // Abort Program
+                    exit = true;
+                } else if (!std::cin.eof()) {
+                    // Invalid Input Number
+                    std::cout << "Error: menu item selected is not valid." << std::endl;
+
+                }
+            }
+        } else {
+            std::cout << "Error: input was not a number. Please try again." << std::endl;
+            std::cin.clear();
+        }
     }
 
     return EXIT_SUCCESS;
@@ -176,6 +233,14 @@ void splitString(string s, vector<string>& tokens, string delimeter)
     delete[] _s;
 }
 
+string readInput()
+{
+    string input;
+    std::getline(std::cin, input);
+
+    return input;
+}
+
 /**
  * Prints the main menu of the vending machine
 **/
@@ -207,7 +272,7 @@ bool addFoodItem(LinkedList& vendingMachine) {
     Node* node = vendingMachine.getBack();
     itemID = node->data->id;
 
-    itemID = getNextItemID(itemID);
+    // itemID = getNextItemID(itemID);
 
     cout << "Enter the item name: ";
     getline(cin, itemName);
@@ -232,22 +297,24 @@ bool removeFoodItem(LinkedList& vendingMachine) {
     cin >> itemID;
 
     // TODO
+    bool success = false;
+    return success;
 }
 
 
-std::string getNextItemID(std::string& currentID) {
-    std::string prefix = currentID.substr(0, 1);
+// std::string getNextItemID(std::string& currentID) {
+//     std::string prefix = currentID.substr(0, 1);
 
-    std::string numericPart = currentID.substr(1);
+//     std::string numericPart = currentID.substr(1);
 
-    int num = std::stoi(numericPart);
-    num++;
+//     int num = std::stoi(numericPart);
+//     num++;
 
-    std::ostringstream oss;
-    oss << std::setw(numericPart.length()) << std::setfill('0') << num;
+//     std::ostringstream oss;
+//     oss << std::setw(numericPart.length()) << std::setfill('0') << num;
 
-    return prefix + oss.str();
-}
+//     return prefix + oss.str();
+// }
 
 // delete this function in the final code
 // void useLinkedList() {
