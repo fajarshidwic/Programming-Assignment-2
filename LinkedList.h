@@ -21,6 +21,8 @@ public:
     void removeBack();
     void removeAt(unsigned index);
 
+    Node* getBack();
+
     void printItems();
 
 private:

@@ -45,6 +45,18 @@ void LinkedList::addBack(FoodItem* data) {
     count ++;
 }
 
+Node* LinkedList::getBack() {
+    Node* returnNode = head;
+    if (head != nullptr) {
+        Node* current = head;
+        while (current->next != nullptr) {
+            current = current->next;
+        }
+        returnNode = current;
+    }
+    return returnNode;
+}
+
 void LinkedList::addAt(FoodItem* data, unsigned index) {
     if (index <= count) {
         if (index == 0) {

@@ -3,8 +3,18 @@
 #include <fstream>
 #include <vector>
 #include <cstring>
+#include <string>
+#include <iomanip>
+#include <sstream>
 
-using namespace std;
+using std::cout;
+using std::string;
+using std::vector;
+using std::cin;
+using std::endl;
+using std::getline;
+using std::ifstream;
+
 
 void printMainMenu();
 
@@ -12,6 +22,9 @@ void useLinkedList();
 
 bool loadItem(char **argv, LinkedList& vendingMachine);
 void splitString(string s, vector<string>& tokens, string delimiter);
+
+bool addFoodItem(LinkedList& vendingMachine);
+bool removeFoodItem(LinkedList& vendingMachine);
 
 /**
  * manages the running of the program, initialises data structures, loads
@@ -182,6 +195,58 @@ void printMainMenu() {
 
     cout << "Select your option (1-7) :" << endl;
 
+}
+
+bool addFoodItem(LinkedList& vendingMachine) {
+    bool success = false;
+
+    string itemID, itemName, itemDescription;
+    double itemPrice;
+    int itemStock = DEFAULT_FOOD_STOCK_LEVEL;
+
+    Node* node = vendingMachine.getBack();
+    itemID = node->data->id;
+
+    itemID = getNextItemID(itemID);
+
+    cout << "Enter the item name: ";
+    getline(cin, itemName);
+
+    cout << "Enter the item description: ";
+    getline(cin, itemDescription);
+
+    cout << "Enter the price for this item (in cents): ";
+    cin >> itemPrice;
+
+    FoodItem* item = new FoodItem(itemID, itemName, itemDescription, itemPrice, itemStock);
+    vendingMachine.addBack(item);
+
+    return success;
+
+}
+
+bool removeFoodItem(LinkedList& vendingMachine) {
+    string itemID;
+
+    cout << "Enter the food id of the food to remove from the menu: ";
+    cin >> itemID;
+
+    // TODO
+}
+
+
+std::string getNextItemID(std::string& currentID) {
+    std::string prefix = currentID.substr(0, 1);
+
+    std::string numericPart = currentID.substr(1);
+
+    int num = std::stoi(numericPart);
+    num++;
+
+    std::ostringstream oss;
+    oss << std::setw(numericPart.length()) << std::setfill('0') << num;
+
+    return prefix + oss.str();
 }
 
 // delete this function in the final code
