@@ -57,6 +57,23 @@ Node* LinkedList::getBack() {
     return returnNode;
 }
 
+int LinkedList::getIndex(std::string itemID) {
+    int index = 0;
+    int returnIndex;
+
+    if (head != nullptr) {
+        Node* current = head;
+        while (current->next != nullptr) {
+            if ((current->data->id) == itemID) {
+                returnIndex = index;
+            }
+            current = current->next;
+            index = index + 1;
+        }
+    }
+    return returnIndex;
+}
+
 void LinkedList::addAt(FoodItem* data, unsigned index) {
     if (index <= count) {
         if (index == 0) {

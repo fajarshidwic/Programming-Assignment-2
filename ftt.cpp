@@ -23,8 +23,8 @@ void useLinkedList();
 bool loadItem(char **argv, LinkedList& vendingMachine);
 void splitString(string s, vector<string>& tokens, string delimiter);
 
-bool addFoodItem(LinkedList& vendingMachine);
-bool removeFoodItem(LinkedList& vendingMachine);
+void addFoodItem(LinkedList& vendingMachine);
+void removeFoodItem(LinkedList& vendingMachine);
 
 /**
  * manages the running of the program, initialises data structures, loads
@@ -197,8 +197,7 @@ void printMainMenu() {
 
 }
 
-bool addFoodItem(LinkedList& vendingMachine) {
-    bool success = false;
+void addFoodItem(LinkedList& vendingMachine) {
 
     string itemID, itemName, itemDescription;
     double itemPrice;
@@ -220,18 +219,17 @@ bool addFoodItem(LinkedList& vendingMachine) {
 
     FoodItem* item = new FoodItem(itemID, itemName, itemDescription, itemPrice, itemStock);
     vendingMachine.addBack(item);
-
-    return success;
-
 }
 
-bool removeFoodItem(LinkedList& vendingMachine) {
+void removeFoodItem(LinkedList& vendingMachine) {
     string itemID;
 
     cout << "Enter the food id of the food to remove from the menu: ";
     cin >> itemID;
 
     // TODO
+    int index = vendingMachine.getIndex(itemID);
+    vendingMachine.removeAt(index);
 }
 
 

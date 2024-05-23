@@ -22,6 +22,7 @@ public:
     void removeAt(unsigned index);
 
     Node* getBack();
+    int getIndex(std::string itemID);
 
     void printItems();
 
