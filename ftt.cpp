@@ -22,9 +22,14 @@ void useLinkedList();
 
 bool loadItem(char **argv, LinkedList& vendingMachine);
 void splitString(string s, vector<string>& tokens, string delimiter);
+string readInput();
+string strip(std::string& s);
+bool isInt(const std::string& input);
 
 void addFoodItem(LinkedList& vendingMachine);
 void removeFoodItem(LinkedList& vendingMachine);
+
+void purchaseItem(LinkedList& LinkedList);
 
 /**
  * manages the running of the program, initialises data structures, loads
@@ -54,12 +59,68 @@ int main(int argc, char **argv)
         allowedArgs = loadItem(argv, vendingMachine);
     }
     
+    string choice = "-1";
     bool exit = false;
 
     while (!std::cin.eof() && !exit && allowedArgs) {
         // useLinkedList();
-        vendingMachine.printItems();
-        exit = true;
+        // vendingMachine.printItems();
+        printMainMenu();
+        choice = readInput();
+
+        if (!std::cin.eof()) {
+            bool isInt = true;
+            // Menu Block
+            if (isInt && choice != "") {
+
+                if (std::stoi(choice) == 1) {
+                    // Display Items
+                    vendingMachine.printItems();
+                    cout << endl;
+
+                } else if (std::stoi(choice) == 2) {
+                    // Purchase Items
+                    purchaseItem(vendingMachine);
+                    std::cout << "2" << std::endl;
+                    cin.clear();
+
+                } else if (std::stoi(choice) == 3) {
+                    // Save & Exit
+                    exit = true;
+                    std::cout << "Save and Exit" << std::endl;
+                    // saveItem(outFileName, vendingMachine);
+                    // saveCoin(coinFile, vendingMachine);
+
+                } else if (std::stoi(choice) == 4) {
+                    // Add Item
+                    addFoodItem(vendingMachine);
+                    std::cout << "4" << std::endl;
+                    std::cin.clear();
+
+                } else if (std::stoi(choice) == 5) {
+                    // Remove Item
+                    removeFoodItem(vendingMachine);
+                    std::cout << "5" << std::endl;
+                    cin.clear();
+
+                } else if (std::stoi(choice) == 6) {
+                    // Displayt Coins
+                    // displayCoin(vendingMachine);
+                    std::cout << "6" << std::endl;
+
+                } else if (std::stoi(choice) == 7) {
+                    // Abort Program
+                    exit = true;
+                } else if (!std::cin.eof()) {
+                    // Invalid Input Number
+                    std::cout << "Error: menu item selected is not valid." << std::endl;
+
+                }
+            }
+        } else {
+            std::cout << "Error: input was not a number. Please try again." << std::endl;
+            std::cin.clear();
+        }
     }
 
     return EXIT_SUCCESS;
@@ -88,41 +149,13 @@ bool loadItem(char **argv, LinkedList& vendingMachine){
             food_id = foodTokens[0];
             food_name = foodTokens[1];
             food_desc = foodTokens[2];
-            // food_price = foodTokens[3];
-
-            // // convert the food_price into token based on delimeter '.' and create new Price object
-
-            // std::vector<std::string> priceTokens;
-            // string priceDelimiter = ".";
-            // splitString(food_price, priceTokens, priceDelimiter);
-
-            // unsigned int dollars = atoi(priceTokens[0].c_str());
-            // unsigned int cents = atoi(priceTokens[1].c_str());
-
-            // Price foodPrice = Price{dollars, cents};
             food_price = std::stod(foodTokens[3]);
             food_stock = std::stoi(foodTokens[4]);
-
-            cout << "Creating FoodItem:" << endl;
-            cout << "food_id: " << food_id << endl;
-            cout << "food_name: " << food_name << endl;
-            cout << "food_desc: " << food_desc << endl;
-            cout << "food_price: " << food_price << endl;
-            cout << "food_stock: " << food_stock << endl;
-            cout << endl;
 
             // Create node
             FoodItem* item = new FoodItem(food_id, food_name, food_desc, food_price, food_stock);
             // Append node to end of linked list
             vendingMachine.addBack(item);
-
-            // Debug specific properties
-            cout << "FoodItem properties:" << endl;
-            cout << "ID: " << item->id << endl;
-            cout << "Name: " << item->name << endl;
-            cout << "Description: " << item->description << endl;
-            cout << "Price: " << item->price.dollars << "." << item->price.cents << endl;
-            cout << "Stock: " << item->on_hand << endl;
       }
       // Failed to open
       myfile.close();
@@ -176,6 +209,14 @@ void splitString(string s, vector<string>& tokens, string delimeter)
     delete[] _s;
 }
 
+string readInput()
+{
+    string input;
+    std::getline(std::cin, input);
+
+    return input;
+}
+
 /**
  * Prints the main menu of the vending machine
 **/
@@ -206,7 +247,7 @@ void addFoodItem(LinkedList& vendingMachine) {
     Node* node = vendingMachine.getBack();
     itemID = node->data->id;
 
-    itemID = getNextItemID(itemID);
+    // itemID = getNextItemID(itemID);
 
     cout << "Enter the item name: ";
     getline(cin, itemName);
@@ -233,18 +274,209 @@ void removeFoodItem(LinkedList& vendingMachine) {
 }
 
 
-std::string getNextItemID(std::string& currentID) {
-    std::string prefix = currentID.substr(0, 1);
+// std::string getNextItemID(std::string& currentID) {
+//     std::string prefix = currentID.substr(0, 1);
 
-    std::string numericPart = currentID.substr(1);
+//     std::string numericPart = currentID.substr(1);
 
-    int num = std::stoi(numericPart);
-    num++;
+//     int num = std::stoi(numericPart);
+//     num++;
 
-    std::ostringstream oss;
-    oss << std::setw(numericPart.length()) << std::setfill('0') << num;
+//     std::ostringstream oss;
+//     oss << std::setw(numericPart.length()) << std::setfill('0') << num;
 
-    return prefix + oss.str();
+//     return prefix + oss.str();
+// }
+
+void purchaseItem(LinkedList& LinkedList) {
+
+    cout << "Purchase Item" << endl;
+    cout << "-------------" << endl;
+    cout << "Please enter the id of the item you wish to purchase:";
+
+    std::string itemId;
+    bool quit = false;
+    while (!quit) {
+        std::getline(std::cin, itemId);
+        strip(itemId);
+
+        if (itemId.length() > IDLEN) {
+            std::cout << "Error: line entered was too long. Please try again.\n"
+                    << "Error inputting ID of the product. Please try again.\n" 
+                    << "Please enter the id of the item you wish to purchase:";
+        } else {
+            quit = true;
+        }
+    }
+
+    if ((!cin.eof())) {
+        // Check if the itemID exists
+        if (LinkedList.get(itemId) == 0) {
+            cout << "Invalid Input" << endl;
+            cout << endl;
+        } else {
+
+            FoodItem* item = LinkedList.get(itemId);
+
+            if (item->on_hand > 0) {
+
+                // Printing the item
+                cout << "You have selected \"";
+                cout << item->name;
+                cout << " - ";
+                cout << item->description;
+                cout << "\". This will cost you $ ";
+
+                // Set local variables.
+                int dollar = item->price.dollars;
+                int cent = item->price.cents;
+                string money = std::to_string(dollar) + "." + std::to_string(cent);
+
+                // Continuation
+                cout << money << "." << endl;
+                cout << "Please hand over the money - type in the value of each note/coin in cents.\nPress enter or ctrl-d on a new line to cancel this purchase:\n";
+
+                // Initialise more Variables
+                bool paidFor = false;
+                int remainingCost = (dollar * 100) + cent;
+                vector<int> coinsToAdd;
+                string moneyIn;
+
+                // Loop until the item has been paidFor or the user has terminated the loop
+                while (paidFor == false) {
+                    dollar = remainingCost / 100;
+                    cent = remainingCost % 100;
+
+                    cout << "Remaining Cost: $" << dollar << "." << cent << ": ";
+                    moneyIn = readInput();
+                    strip(moneyIn);
+                    
+                    // This is to check for empty values
+                    if ((cin.eof()) || (moneyIn == "")) {
+                        // User cancels purchase
+                        cout << "Pressed ctrl-D or enter" << endl;
+                        paidFor = true;
+                        clearerr(stdin);
+                    } 
+
+                    else if (isInt(moneyIn)) {
+                        // Initialise and set variables
+                        int coinDenoms[8] = {5, 10, 20, 50, 100, 200, 500, 1000};
+                        int denomSize = sizeof(coinDenoms) / sizeof(coinDenoms[0]);
+                        bool validDenomination = false;
+    
+                        // Check if the input is a valid denomination
+                        for (int idx = 0; idx < denomSize; idx++) {
+                            if (stoi(moneyIn) == coinDenoms[idx]) {
+                                validDenomination = true;
+                            }
+                        } 
+                        
+                        if (validDenomination == false) {
+                            // Invalid Denomination
+                            cout << "That is not a valid denomination" << endl;
+                        } else {
+                            // Valid Input
+                            remainingCost -= stoi(moneyIn);
+    
+                            // Add input to sumVector
+                            coinsToAdd.push_back(stoi(moneyIn));
+                            
+                            // Paid for item
+                            if (remainingCost <= 0) {
+                                // User has paid for the item
+                                paidFor = true;
+                                int change = abs(remainingCost);
+                                
+                                cout << "Here is your " << item->name << " and your change of $" << change / 100 << "." << change % 100 << ": ";
+                                // if (printChange(change, LinkedList)) {
+                                //     // if failed to give change
+                                //     cout << "Sorry, we don't have enough coins to give you change" << endl;
+                                //     cout << "Try again with more exact coins" << endl;
+                                // } else {
+                                //     // if successfully gave change
+                                //     cout << "Please come again soon.\n";
+    
+                                //     // removing stock
+                                //     item->on_hand -= 1;
+
+                                //     // removing coins from purse
+                                //     int sizeAdd = coinsToAdd.size();
+                                //     for (int idx = 0; idx < sizeAdd; idx++) {
+                                //         int denomIdx = 0;
+                                //         for (int jdx = 0; jdx < 8; jdx++) {
+                                //             if (coinsToAdd[idx] == coinDenoms[jdx]) {
+                                //                 denomIdx = jdx;
+                                //             }
+                                //         }
+                                //         LinkedList.purse[denomIdx].count++;
+                                //     }
+                                // }
+                                // if successfully gave change
+                                    cout << "Please come again soon.\n";
+    
+                                    // removing stock
+                                    item->on_hand -= 1;
+
+                                    // removing coins from purse
+                                    int sizeAdd = coinsToAdd.size();
+                                    for (int idx = 0; idx < sizeAdd; idx++) {
+                                        int denomIdx = 0;
+                                        for (int jdx = 0; jdx < 8; jdx++) {
+                                            if (coinsToAdd[idx] == coinDenoms[jdx]) {
+                                                denomIdx = jdx;
+                                            }
+                                        }
+                                        LinkedList.purse[denomIdx].count++;
+                                    }
+                            }
+                        }
+                    } else {
+                        cout << "Enter a valid denomination" << endl;
+                    }
+                }
+            }
+            else {
+                cout << "Item not in machine" << endl;
+            }
+        }
+    } else {
+        clearerr(stdin);
+        cout << endl;
+    }
+}
+
+string strip(std::string& s) {
+    int i = 0;
+    while (std::isspace(s[i])) {
+        // Remove the character at index i
+        s.erase(i, 1);
+    }
+    // Count for new index for end point here.
+    int lastIndex = s.length() - 1;
+    while (std::isspace(s[lastIndex])) {
+        // Remove the character at index i
+        s.erase(lastIndex, 1);
+        // Count for new index for end point here.
+        lastIndex = s.length() - 1;
+    }
+    return s;
+}
+
+bool isInt(const std::string& input) {
+    bool retVal = true;
+    int inputLen = input.length();
+    for (int i = 0; i < inputLen; ++i){
+        if (!isdigit(input[i])){
+            retVal = false;
+        }
+    }
+
+    // Added this because "nothing" should not be an int
+    if (input.length() == 0) {
+        retVal = false;
+    }
+    return retVal;
 }
 
 // delete this function in the final code
