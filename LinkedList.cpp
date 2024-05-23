@@ -59,7 +59,7 @@ Node* LinkedList::getBack() {
 
 int LinkedList::getIndex(std::string itemID) {
     int index = 0;
-    int returnIndex;
+    int returnIndex = 0;
 
     if (head != nullptr) {
         Node* current = head;
