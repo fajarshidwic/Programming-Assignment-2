@@ -149,41 +149,13 @@ bool loadItem(char **argv, LinkedList& vendingMachine){
             food_id = foodTokens[0];
             food_name = foodTokens[1];
             food_desc = foodTokens[2];
-            // food_price = foodTokens[3];
-
-            // // convert the food_price into token based on delimeter '.' and create new Price object
-
-            // std::vector<std::string> priceTokens;
-            // string priceDelimiter = ".";
-            // splitString(food_price, priceTokens, priceDelimiter);
-
-            // unsigned int dollars = atoi(priceTokens[0].c_str());
-            // unsigned int cents = atoi(priceTokens[1].c_str());
-
-            // Price foodPrice = Price{dollars, cents};
             food_price = std::stod(foodTokens[3]);
             food_stock = std::stoi(foodTokens[4]);
-
-            cout << "Creating FoodItem:" << endl;
-            cout << "food_id: " << food_id << endl;
-            cout << "food_name: " << food_name << endl;
-            cout << "food_desc: " << food_desc << endl;
-            cout << "food_price: " << food_price << endl;
-            cout << "food_stock: " << food_stock << endl;
-            cout << endl;
 
             // Create node
             FoodItem* item = new FoodItem(food_id, food_name, food_desc, food_price, food_stock);
             // Append node to end of linked list
             vendingMachine.addBack(item);
-
-            // Debug specific properties
-            cout << "FoodItem properties:" << endl;
-            cout << "ID: " << item->id << endl;
-            cout << "Name: " << item->name << endl;
-            cout << "Description: " << item->description << endl;
-            cout << "Price: " << item->price.dollars << "." << item->price.cents << endl;
-            cout << "Stock: " << item->on_hand << endl;
       }
       // Failed to open
       myfile.close();

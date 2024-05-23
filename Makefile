@@ -10,3 +10,6 @@ ftt: Coin.o Node.o LinkedList.o ftt.o
 
 %.o: %.cpp
 	g++ -Wall -Werror -std=c++14 -g -O -c $^
+
+purchasetest: ftt
+	./ftt foods.dat coins.dat < ./input/purchasetest/purchasetest1/input.txt > ./output/purchasetest/output1.txt

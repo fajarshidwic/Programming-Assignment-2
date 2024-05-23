@@ -1,0 +1,50 @@
+loaded
+Main Menu:
+	1. Display Meal Options
+	2. Purchase Meal
+	3. Save and Exit
+Administrator-Only Menu:
+	4. Add Food
+	5. Remove Food
+	6. Display Balance
+	7. Abort Program
+Select your option (1-7) :
+Purchase Item
+-------------
+Please enter the id of the item you wish to purchase:You have selected "Baklava - Rich middle eastern cake of thin layers of flaky pastry filled with nuts and honey". This will cost you $ 8.50.
+Please hand over the money - type in the value of each note/coin in cents.
+Press enter or ctrl-d on a new line to cancel this purchase:
+Remaining Cost: $8.50: Here is your Baklava and your change of $1.50: Please come again soon.
+2
+Main Menu:
+	1. Display Meal Options
+	2. Purchase Meal
+	3. Save and Exit
+Administrator-Only Menu:
+	4. Add Food
+	5. Remove Food
+	6. Display Balance
+	7. Abort Program
+Select your option (1-7) :
+Items Menu
+----------
+ID   |Name                                    | Available | Price
+-----------------------------------------------------------------
+F0001|Baklava                                 |9          |$ 8.50
+F0002|Gnocchi                                 |10         |$12.50
+F0003|Haggis                                  |10         |$18.70
+F0004|Jambalaya                               |10         |$23.00
+F0005|Bibimbab                                |10         |$15.80
+F0006|Fondue                                  |10         |$31.50
+F0007|Kelewele                                |10         |$11.50
+
+Main Menu:
+	1. Display Meal Options
+	2. Purchase Meal
+	3. Save and Exit
+Administrator-Only Menu:
+	4. Add Food
+	5. Remove Food
+	6. Display Balance
+	7. Abort Program
+Select your option (1-7) :
