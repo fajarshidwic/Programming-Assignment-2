@@ -21,6 +21,8 @@ public:
     void removeBack();
     void removeAt(unsigned index);
 
+    FoodItem* get(std::string id);
+
     Node* getBack();
 
     void printItems();

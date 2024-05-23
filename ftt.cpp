@@ -23,9 +23,13 @@ void useLinkedList();
 bool loadItem(char **argv, LinkedList& vendingMachine);
 void splitString(string s, vector<string>& tokens, string delimiter);
 string readInput();
+string strip(std::string& s);
+bool isInt(const std::string& input);
 
 bool addFoodItem(LinkedList& vendingMachine);
 bool removeFoodItem(LinkedList& vendingMachine);
+
+void purchaseItem(LinkedList& LinkedList);
 
 /**
  * manages the running of the program, initialises data structures, loads
@@ -76,7 +80,7 @@ int main(int argc, char **argv)
 
                 } else if (std::stoi(choice) == 2) {
                     // Purchase Items
-                    // purchaseItem(&vendingMachine);
+                    purchaseItem(vendingMachine);
                     std::cout << "2" << std::endl;
                     cin.clear();
 
@@ -315,6 +319,197 @@ bool removeFoodItem(LinkedList& vendingMachine) {
 
 //     return prefix + oss.str();
 // }
+
+void purchaseItem(LinkedList& LinkedList) {
+
+    cout << "Purchase Item" << endl;
+    cout << "-------------" << endl;
+    cout << "Please enter the id of the item you wish to purchase:";
+
+    std::string itemId;
+    bool quit = false;
+    while (!quit) {
+        std::getline(std::cin, itemId);
+        strip(itemId);
+
+        if (itemId.length() > IDLEN) {
+            std::cout << "Error: line entered was too long. Please try again.\n"
+                    << "Error inputting ID of the product. Please try again.\n" 
+                    << "Please enter the id of the item you wish to purchase:";
+        } else {
+            quit = true;
+        }
+    }
+
+    if ((!cin.eof())) {
+        // Check if the itemID exists
+        if (LinkedList.get(itemId) == 0) {
+            cout << "Invalid Input" << endl;
+            cout << endl;
+        } else {
+
+            FoodItem* item = LinkedList.get(itemId);
+
+            if (item->on_hand > 0) {
+
+                // Printing the item
+                cout << "You have selected \"";
+                cout << item->name;
+                cout << " - ";
+                cout << item->description;
+                cout << "\". This will cost you $ ";
+
+                // Set local variables.
+                int dollar = item->price.dollars;
+                int cent = item->price.cents;
+                string money = std::to_string(dollar) + "." + std::to_string(cent);
+
+                // Continuation
+                cout << money << "." << endl;
+                cout << "Please hand over the money - type in the value of each note/coin in cents.\nPress enter or ctrl-d on a new line to cancel this purchase:\n";
+
+                // Initialise more Variables
+                bool paidFor = false;
+                int remainingCost = (dollar * 100) + cent;
+                vector<int> coinsToAdd;
+                string moneyIn;
+
+                // Loop until the item has been paidFor or the user has terminated the loop
+                while (paidFor == false) {
+                    dollar = remainingCost / 100;
+                    cent = remainingCost % 100;
+
+                    cout << "Remaining Cost: $" << dollar << "." << cent << ": ";
+                    moneyIn = readInput();
+                    strip(moneyIn);
+                    
+                    // This is to check for empty values
+                    if ((cin.eof()) || (moneyIn == "")) {
+                        // User cancels purchase
+                        cout << "Pressed ctrl-D or enter" << endl;
+                        paidFor = true;
+                        clearerr(stdin);
+                    } 
+
+                    else if (isInt(moneyIn)) {
+                        // Initialise and set variables
+                        int coinDenoms[8] = {5, 10, 20, 50, 100, 200, 500, 1000};
+                        int denomSize = sizeof(coinDenoms) / sizeof(coinDenoms[0]);
+                        bool validDenomination = false;
+    
+                        // Check if the input is a valid denomination
+                        for (int idx = 0; idx < denomSize; idx++) {
+                            if (stoi(moneyIn) == coinDenoms[idx]) {
+                                validDenomination = true;
+                            }
+                        } 
+                        
+                        if (validDenomination == false) {
+                            // Invalid Denomination
+                            cout << "That is not a valid denomination" << endl;
+                        } else {
+                            // Valid Input
+                            remainingCost -= stoi(moneyIn);
+    
+                            // Add input to sumVector
+                            coinsToAdd.push_back(stoi(moneyIn));
+                            
+                            // Paid for item
+                            if (remainingCost <= 0) {
+                                // User has paid for the item
+                                paidFor = true;
+                                int change = abs(remainingCost);
+                                
+                                cout << "Here is your " << item->name << " and your change of $" << change / 100 << "." << change % 100 << ": ";
+                                // if (printChange(change, LinkedList)) {
+                                //     // if failed to give change
+                                //     cout << "Sorry, we don't have enough coins to give you change" << endl;
+                                //     cout << "Try again with more exact coins" << endl;
+                                // } else {
+                                //     // if successfully gave change
+                                //     cout << "Please come again soon.\n";
+    
+                                //     // removing stock
+                                //     item->on_hand -= 1;
+
+                                //     // removing coins from purse
+                                //     int sizeAdd = coinsToAdd.size();
+                                //     for (int idx = 0; idx < sizeAdd; idx++) {
+                                //         int denomIdx = 0;
+                                //         for (int jdx = 0; jdx < 8; jdx++) {
+                                //             if (coinsToAdd[idx] == coinDenoms[jdx]) {
+                                //                 denomIdx = jdx;
+                                //             }
+                                //         }
+                                //         LinkedList.purse[denomIdx].count++;
+                                //     }
+                                // }
+                                // if successfully gave change
+                                    cout << "Please come again soon.\n";
+    
+                                    // removing stock
+                                    item->on_hand -= 1;
+
+                                    // removing coins from purse
+                                    int sizeAdd = coinsToAdd.size();
+                                    for (int idx = 0; idx < sizeAdd; idx++) {
+                                        int denomIdx = 0;
+                                        for (int jdx = 0; jdx < 8; jdx++) {
+                                            if (coinsToAdd[idx] == coinDenoms[jdx]) {
+                                                denomIdx = jdx;
+                                            }
+                                        }
+                                        LinkedList.purse[denomIdx].count++;
+                                    }
+                            }
+                        }
+                    } else {
+                        cout << "Enter a valid denomination" << endl;
+                    }
+                }
+            }
+            else {
+                cout << "Item not in machine" << endl;
+            }
+        }
+    } else {
+        clearerr(stdin);
+        cout << endl;
+    }
+}
+
+string strip(std::string& s) {
+    int i = 0;
+    while (std::isspace(s[i])) {
+        // Remove the character at index i
+        s.erase(i, 1);
+    }
+    // Count for new index for end point here.
+    int lastIndex = s.length() - 1;
+    while (std::isspace(s[lastIndex])) {
+        // Remove the character at index i
+        s.erase(lastIndex, 1);
+        // Count for new index for end point here.
+        lastIndex = s.length() - 1;
+    }
+    return s;
+}
+
+bool isInt(const std::string& input) {
+    bool retVal = true;
+    int inputLen = input.length();
+    for (int i = 0; i < inputLen; ++i){
+        if (!isdigit(input[i])){
+            retVal = false;
+        }
+    }
+
+    // Added this because "nothing" should not be an int
+    if (input.length() == 0) {
+        retVal = false;
+    }
+    return retVal;
+}
 
 // delete this function in the final code
 // void useLinkedList() {
