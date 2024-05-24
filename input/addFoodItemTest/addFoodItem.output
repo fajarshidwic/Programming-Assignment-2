@@ -1,0 +1,60 @@
+loaded
+Main Menu:
+        1. Display Meal Options
+        2. Purchase Meal
+        3. Save and Exit
+Administrator-Only Menu:
+        4. Add Food
+        5. Remove Food
+        6. Display Balance
+        7. Abort Program
+Select your option (1-7) :
+4
+Enter the item name: Pizza
+Enter the item description: a dish made typically
+Enter the price for this item (in cents): 2000
+4
+Main Menu:
+        1. Display Meal Options
+        2. Purchase Meal
+        3. Save and Exit
+Administrator-Only Menu:
+        4. Add Food
+        5. Remove Food
+        6. Display Balance
+        7. Abort Program
+Select your option (1-7) :
+Main Menu:
+        1. Display Meal Options
+        2. Purchase Meal
+        3. Save and Exit
+Administrator-Only Menu:
+        4. Add Food
+        5. Remove Food
+        6. Display Balance
+        7. Abort Program
+Select your option (1-7) :
+1
+Items Menu
+----------
+ID   |Name                                    | Available | Price
+-----------------------------------------------------------------
+F0001|Baklava                                 |10         |$ 8.50
+F0002|Gnocchi                                 |10         |$12.50
+F0003|Haggis                                  |10         |$18.70
+F0004|Jambalaya                               |10         |$23.00
+F0005|Bibimbab                                |10         |$15.80
+F0006|Fondue                                  |10         |$31.50
+F0007|Kelewele                                |10         |$11.50
+F0007|Pizza                                   |20         |$20.00
+
+Main Menu:
+        1. Display Meal Options
+        2. Purchase Meal
+        3. Save and Exit
+Administrator-Only Menu:
+        4. Add Food
+        5. Remove Food
+        6. Display Balance
+        7. Abort Program
+Select your option (1-7) :
