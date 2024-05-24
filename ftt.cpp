@@ -257,8 +257,6 @@ void addFoodItem(LinkedList& vendingMachine) {
     Node* node = vendingMachine.getBack();
     itemID = node->data->id;
 
-    // itemID = getNextItemID(itemID);
-
     cout << "Enter the item name: ";
     getline(cin, itemName);
 
@@ -322,20 +320,6 @@ void displayBalance(LinkedList& vendingMachine) {
     cout << "------------------------" << endl;
     cout << "Total Value: $" << std::fixed << std::setprecision(3) << total_value << endl;
 }
-
-// std::string getNextItemID(std::string& currentID) {
-//     std::string prefix = currentID.substr(0, 1);
-
-//     std::string numericPart = currentID.substr(1);
-
-//     int num = std::stoi(numericPart);
-//     num++;
-
-//     std::ostringstream oss;
-//     oss << std::setw(numericPart.length()) << std::setfill('0') << num;
-
-//     return prefix + oss.str();
-// }
 
 void purchaseItem(LinkedList& LinkedList) {
 
@@ -438,29 +422,6 @@ void purchaseItem(LinkedList& LinkedList) {
                                 int change = abs(remainingCost);
                                 
                                 cout << "Here is your " << item->name << " and your change of $" << change / 100 << "." << change % 100 << ": ";
-                                // if (printChange(change, LinkedList)) {
-                                //     // if failed to give change
-                                //     cout << "Sorry, we don't have enough coins to give you change" << endl;
-                                //     cout << "Try again with more exact coins" << endl;
-                                // } else {
-                                //     // if successfully gave change
-                                //     cout << "Please come again soon.\n";
-    
-                                //     // removing stock
-                                //     item->on_hand -= 1;
-
-                                //     // removing coins from purse
-                                //     int sizeAdd = coinsToAdd.size();
-                                //     for (int idx = 0; idx < sizeAdd; idx++) {
-                                //         int denomIdx = 0;
-                                //         for (int jdx = 0; jdx < 8; jdx++) {
-                                //             if (coinsToAdd[idx] == coinDenoms[jdx]) {
-                                //                 denomIdx = jdx;
-                                //             }
-                                //         }
-                                //         LinkedList.purse[denomIdx].count++;
-                                //     }
-                                // }
                                 // if successfully gave change
                                     cout << "Please come again soon.\n";
     
@@ -539,28 +500,3 @@ bool isInt(const std::string& input) {
     }
     return retVal;
 }
-
-// delete this function in the final code
-// void useLinkedList() {
-//     FoodItem* item1 = new FoodItem("I0001", "Burger", "A cheese burger", 12.99, 10);
-//     FoodItem* item2 = new FoodItem("I0002", "Pizza", "A big pizza", 15.99, 10);
-//     FoodItem* item3 = new FoodItem("I0003", "Tea", "Black tea", 6.75, 10);
-//     FoodItem* item4 = new FoodItem("I0004", "Fruit", "any fruit", 0.95, 10);
-//     FoodItem* item5 = new FoodItem("I0005", "Apple Pie", "description", 1.5, 100);
-
-//     LinkedList list;
-
-//     list.addFront(item1);
-//     list.addBack(item2);
-//     list.addFront(item3);
-//     list.addBack(item4);
-//     list.addAt(item5, 2);
-//     list.addFront(new FoodItem("I0006", "Lemon Tart", "description", 3.75)); 
-//     list.printItems();
-
-//     list.removeBack();
-//     list.removeFront();
-//     list.removeAt(2);
-   
-//     list.printItems();
-// }
