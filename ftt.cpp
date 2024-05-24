@@ -6,6 +6,7 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
+#include <map>
 
 using std::cout;
 using std::string;
@@ -14,8 +15,12 @@ using std::cin;
 using std::endl;
 using std::getline;
 using std::ifstream;
+using std::map;
+using std::setw;
+using std::ofstream;
 
 
+//Function declarations
 void printMainMenu();
 
 void useLinkedList();
@@ -30,6 +35,10 @@ void addFoodItem(LinkedList& vendingMachine);
 void removeFoodItem(LinkedList& vendingMachine);
 
 void purchaseItem(LinkedList& LinkedList);
+
+void displayBalance(const map<int, int>& balance);
+map<int, int> readBalance(const string& coinsFile);
+void saveBalance(const map<int, int>& balance, const string& coinsFile);
 
 /**
  * manages the running of the program, initialises data structures, loads
@@ -58,6 +67,9 @@ int main(int argc, char **argv)
         coinsFile = argv[2];
         allowedArgs = loadItem(argv, vendingMachine);
     }
+
+    // Read the balance from the coins.dat file
+    std::map<int, int> balance = readBalance(coinsFile);
     
     string choice = "-1";
     bool exit = false;
@@ -105,7 +117,7 @@ int main(int argc, char **argv)
 
                 } else if (std::stoi(choice) == 6) {
                     // Displayt Coins
-                    // displayCoin(vendingMachine);
+                    displayBalance(balance);
                     std::cout << "6" << std::endl;
 
                 } else if (std::stoi(choice) == 7) {
@@ -271,6 +283,52 @@ void removeFoodItem(LinkedList& vendingMachine) {
     // TODO
     int index = vendingMachine.getIndex(itemID);
     vendingMachine.removeAt(index);
+}
+
+void displayBalance(const map<int, int>& balance) {
+    double total_value = 0.0;
+    cout << "Balance Summary" << endl;
+    cout << "---------------" << endl;
+    cout << "Denom | Quantity | Value" << endl;
+    cout << "------------------------" << endl;
+
+    for (const auto& pair : balance) {
+        int denom = pair.first;
+        int quantity = pair.second;
+        double value = (denom / 100.0) * quantity;
+        total_value += value;
+        cout << setw(4) << denom << " | " << setw(8) << quantity << " | $" << setw(6) << std::fixed << std::setprecision(2) << value << endl;
+    }
+
+    cout << "------------------------" << endl;
+    cout << "Total Value: $" << std::fixed << std::setprecision(3) << total_value << endl;
+}
+
+map<int, int> readBalance(const string& coinsFile) {
+    ifstream file(coinsFile);
+    map<int, int> balance;
+    if (file.is_open()) {
+        int denom, quantity;
+        while (file >> denom >> quantity) {
+            balance[denom] = quantity;
+        }
+        file.close();
+    } else {
+        cout << "Unable to open file " << coinsFile << endl;
+    }
+    return balance;
+}
+
+void saveBalance(const map<int, int>& balance, const string& coinsFile) {
+    ofstream file(coinsFile);  // Changed from ifstream to ofstream
+    if (file.is_open()) {
+        for (const auto& pair : balance) {
+            file << pair.first << " " << pair.second << endl;
+        }
+        file.close();
+    } else {
+        cout << "Unable to open file " << coinsFile << endl;
+    }
 }
 
 
