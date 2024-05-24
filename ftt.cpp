@@ -37,7 +37,7 @@ void removeFoodItem(LinkedList& vendingMachine);
 
 void purchaseItem(LinkedList& LinkedList);
 
-void displayBalance(const map<int, int>& vendingMachine);
+void displayBalance(LinkedList& vendingMachine);
 
 void saveItem(std::string outFileName, LinkedList& vendingMachine);
 void saveCoin(std::string outFileName, LinkedList& vendingMachine);
@@ -302,20 +302,22 @@ void displayBalance(const map<int, int>& balance) {
     cout << "Total Value: $" << std::fixed << std::setprecision(3) << total_value << endl;
 }
 
-void displayBalance(const LinkedList& vendingMachine) {
+void displayBalance(LinkedList& vendingMachine) {
     double total_value = 0.0;
     cout << "Balance Summary" << endl;
     cout << "---------------" << endl;
     cout << "Denom | Quantity | Value" << endl;
     cout << "------------------------" << endl;
 
-    // for (size_t i = 0; i < vendingMachine.purse.size(); ++i) {
-    //     int denom = Coin::denomination_to_string(vendingMachine.purse[i].denom);
-    //     int quantity = vendingMachine.purse[i].count;
-    //     double value = (denom / 100.0) * quantity;
-    //     total_value += value;
-    //     cout << setw(4) << denom << " | " << setw(8) << quantity << " | $" << setw(6) << std::fixed << std::setprecision(2) << value << endl;
-    // }
+    int len = sizeof(vendingMachine.purse);
+
+    for (int i = 0; i < len; ++i) {
+        Denomination denom = vendingMachine.purse[i].denom;
+        int quantity = vendingMachine.purse[i].count;
+        double value = (denom / 100.0) * quantity;
+        total_value += value;
+        cout << setw(4) << denom << " | " << setw(8) << quantity << " | $" << setw(6) << std::fixed << std::setprecision(2) << value << endl;
+    }
 
     cout << "------------------------" << endl;
     cout << "Total Value: $" << std::fixed << std::setprecision(3) << total_value << endl;
