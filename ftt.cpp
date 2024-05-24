@@ -309,13 +309,13 @@ void displayBalance(const LinkedList& vendingMachine) {
     cout << "Denom | Quantity | Value" << endl;
     cout << "------------------------" << endl;
 
-    for (size_t i = 0; i < vendingMachine.purse.size(); ++i) {
-        int denom = Coin::denomination_to_string(vendingMachine.purse[i].denom);
-        int quantity = vendingMachine.purse[i].count;
-        double value = (denom / 100.0) * quantity;
-        total_value += value;
-        cout << setw(4) << denom << " | " << setw(8) << quantity << " | $" << setw(6) << std::fixed << std::setprecision(2) << value << endl;
-    }
+    // for (size_t i = 0; i < vendingMachine.purse.size(); ++i) {
+    //     int denom = Coin::denomination_to_string(vendingMachine.purse[i].denom);
+    //     int quantity = vendingMachine.purse[i].count;
+    //     double value = (denom / 100.0) * quantity;
+    //     total_value += value;
+    //     cout << setw(4) << denom << " | " << setw(8) << quantity << " | $" << setw(6) << std::fixed << std::setprecision(2) << value << endl;
+    // }
 
     cout << "------------------------" << endl;
     cout << "Total Value: $" << std::fixed << std::setprecision(3) << total_value << endl;
