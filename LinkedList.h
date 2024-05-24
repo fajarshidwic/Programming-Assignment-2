@@ -27,6 +27,8 @@ public:
     int getIndex(std::string itemID);
 
     void printItems();
+    void printItems(std::ostream& outfile);
+    void printCoins(std::ostream& outfile);
 
 private:
     // the beginning of the list

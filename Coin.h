@@ -29,6 +29,7 @@ public:
 
     // reads string and changes it to denomination.
     Denomination string_to_denomination(std::string& str);
+    std::string denomination_to_string(Denomination denom);
 };
 
 #endif // COIN_H

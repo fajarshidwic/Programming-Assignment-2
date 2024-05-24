@@ -192,3 +192,33 @@ void LinkedList::printItems() {
         current = current->next;
     }
 }
+
+void LinkedList::printCoins(std::ostream& outfile) {
+    /*
+    1000,3
+    */
+    for (int i=0; i<8; i++) {
+        outfile << purse->denomination_to_string(purse[i].denom)
+            << "," << purse[i].count
+            << endl;
+    }
+    
+}
+
+void LinkedList::printItems(std::ostream& outfile) {
+    Node* current = head;
+    /*
+    I0001|Meat Pie|Yummy Beef in Gravy surrounded by pastry|3.50|50
+    I0002|Apple Pie                               |20         |$ 3.00
+    */
+    for (unsigned i=0; i<count; ++i) {
+        outfile << std::left << std::setw(5) << current->data->id
+            << "|" << current->data->name
+            << "|" << current->data->description
+            << "|" << current->data->price.dollars << '.' << std::setw(2) << std::setfill('0') << current->data->price.cents
+            << "|" << current->data->on_hand
+            << endl;
+        current = current->next;
+    }
+    
+}

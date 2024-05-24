@@ -47,3 +47,27 @@ Denomination Coin::string_to_denomination(std::string& str) {
     }
     return value;
 }
+
+std::string Coin::denomination_to_string(Denomination denom) {
+    std::string s;
+    if (denom == FIVE_CENTS) {
+        s = "5";
+    } else if (denom == TEN_CENTS) {
+        s = "10";
+    } else if (denom == TWENTY_CENTS) {
+        s = "20";
+    } else if (denom == FIFTY_CENTS) {
+        s = "50";
+    } else if (denom == ONE_DOLLAR) {
+        s = "100";
+    } else if (denom == TWO_DOLLARS) {
+        s = "200";
+    } else if (denom == FIVE_DOLLARS) {
+        s = "500";
+    } else if (denom == TEN_DOLLARS) {
+        s = "1000";
+    } else {
+        s = "-1"; // handle error
+    }
+    return s;
+}
