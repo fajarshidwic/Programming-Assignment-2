@@ -10,6 +10,7 @@ using std::endl;
 LinkedList::LinkedList() {
     head = nullptr;
     count = 0;
+    purse = new Coin[10];
 }
 
 LinkedList::~LinkedList() {

@@ -177,7 +177,7 @@ bool loadItem(char **argv, LinkedList& vendingMachine){
       cout << "Unable to open stock file" << endl;
    }
    string coinLine;
-   // Save the coin file as array since fixed array size of eight.
+   // Save the coin file as array since fixed array size of ten.
    ifstream coinFile(coinsDat);
    if (coinFile.is_open()) {
         int count = 0;
@@ -187,9 +187,14 @@ bool loadItem(char **argv, LinkedList& vendingMachine){
                 splitString(coinLine,coinToken,delimiter);
                 // Check if the coins file is a correct input.
                 vendingMachine.purse[count].count = std::stoi(coinToken[1]);
+                cout << coinToken[1] << endl;
+                cout << vendingMachine.purse[count].count << endl;   
 
                 // TODO: Unable to handle non valid files.
                 vendingMachine.purse[count].denom = vendingMachine.purse->string_to_denomination(coinToken[0]);
+                cout << vendingMachine.purse->string_to_denomination(coinToken[0]) << endl;
+                cout << vendingMachine.purse[count].denom << endl;  
+
                 count += 1;
         }
         coinFile.close();

@@ -4,7 +4,7 @@
  // implement functions for managing coins; this may depend on your design.
 
 void Coin::sortCoins(Coin* purse) {
-    int n = 8;
+    int n = 10;
     Coin* arr = purse;
     // Bubble sort since only 8 items.
     for (int i = 0; i < n - 1; i++) {
@@ -37,6 +37,10 @@ Denomination Coin::string_to_denomination(std::string& str) {
         value = FIVE_DOLLARS;
     } else if (str == "1000") {
         value = TEN_DOLLARS;
+    } else if (str == "2000") {
+        value = TWENTY_DOLLARS;
+    } else if (str == "5000") {
+        value = FIFTY_DOLLARS;
     } else {
          // handle error
         value = ERROR;
