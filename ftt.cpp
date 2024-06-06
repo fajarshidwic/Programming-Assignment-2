@@ -122,6 +122,10 @@ int main(int argc, char **argv)
                 } else if (std::stoi(choice) == 7) {
                     // Abort Program
                     exit = true;
+                } else if (std::stoi(choice) == 8) {
+                    // Display Popular Items
+                    vendingMachine.printPopularItems();
+                    cout << endl;
                 } else if (!std::cin.eof()) {
                     // Invalid Input Number
                     std::cout << "Error: menu item selected is not valid." << std::endl;
@@ -243,6 +247,7 @@ void printMainMenu() {
     cout << "\t5. Remove Food" << endl;
     cout << "\t6. Display Balance" << endl;
     cout << "\t7. Abort Program" << endl;
+    cout << "\t8. Display Popular Meal Options" << endl;
 
     cout << "Select your option (1-7) :" << endl;
 
@@ -424,6 +429,8 @@ void purchaseItem(LinkedList& LinkedList) {
                                 cout << "Here is your " << item->name << " and your change of $" << change / 100 << "." << change % 100 << ": ";
                                 // if successfully gave change
                                     cout << "Please come again soon.\n";
+
+                                    LinkedList.addPopularItem(item);
     
                                     // removing stock
                                     item->on_hand -= 1;
@@ -439,6 +446,7 @@ void purchaseItem(LinkedList& LinkedList) {
                                         }
                                         LinkedList.purse[denomIdx].count++;
                                     }
+
                             }
                         }
                     } else {

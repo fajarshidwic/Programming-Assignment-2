@@ -46,6 +46,22 @@ void LinkedList::addBack(FoodItem* data) {
     count ++;
 }
 
+void LinkedList::addPopularItem(FoodItem* data) {
+    // Check if the item is already in the popular items list
+    Node* current = popularHead;
+    while (current != nullptr) {
+        if (current->data->name == data->name) {
+            return; // Item is already in the popular list, do not add again
+        }
+        current = current->next;
+    }
+
+    // Item is not in the popular list, add it
+    Node* newPopularNode = new Node(data);
+    newPopularNode->next = popularHead;
+    popularHead = newPopularNode;
+}
+
 Node* LinkedList::getBack() {
     Node* returnNode = head;
     if (head != nullptr) {
@@ -193,6 +209,38 @@ void LinkedList::printItems() {
     }
 }
 
+void LinkedList::printPopularItems() {
+    if (popularHead == nullptr) {
+        cout << "Linked list is empty" << endl;
+        return;
+    }
+
+    Node* current = popularHead;
+    cout << "Items Menu" << endl;
+    cout << "----------" << endl;
+    cout << "ID   |Name                                    | Available | Price" << endl;
+    cout << "-----------------------------------------------------------------" << endl;
+    while (current != nullptr) {
+        // cout << "while (current != nullptr) passed" << endl;
+        if (current->data == nullptr) {
+            cout << "Error: Data pointer in node is nullptr" << endl;
+            return;
+        }
+
+        cout << std::left << std::setw(5) << current->data->id
+            << "|" << std::setw(40) << current->data->name
+            << "|" << std::setw(11) << current->data->on_hand
+            << "|$";
+        if (current->data->price.dollars < 10) {
+            cout << " ";
+        }
+        cout << current->data->price.dollars << '.' << std::setw(2) << std::setfill('0') << current->data->price.cents
+            << std::setfill(' ')
+            << endl;
+        current = current->next;
+    }
+}
+
 void LinkedList::printCoins(std::ostream& outfile) {
     /*
     1000,3
@@ -207,10 +255,6 @@ void LinkedList::printCoins(std::ostream& outfile) {
 
 void LinkedList::printItems(std::ostream& outfile) {
     Node* current = head;
-    /*
-    I0001|Meat Pie|Yummy Beef in Gravy surrounded by pastry|3.50|50
-    I0002|Apple Pie                               |20         |$ 3.00
-    */
     for (unsigned i=0; i<count; ++i) {
         outfile << std::left << std::setw(5) << current->data->id
             << "|" << current->data->name
