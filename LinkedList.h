@@ -31,6 +31,7 @@ public:
     void printItems();
     void printPopularItems();
     void printItems(std::ostream& outfile);
+    void printPopularItems(std::ostream& outfile);
     void printCoins(std::ostream& outfile);
 
 private:

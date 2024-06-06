@@ -266,3 +266,17 @@ void LinkedList::printItems(std::ostream& outfile) {
     }
     
 }
+
+void LinkedList::printPopularItems(std::ostream& outfile) {
+    Node* current = popularHead;
+    for (unsigned i=0; i<count; ++i) {
+        outfile << std::left << std::setw(5) << current->data->id
+            << "|" << current->data->name
+            << "|" << current->data->description
+            << "|" << current->data->price.dollars << '.' << std::setw(2) << std::setfill('0') << current->data->price.cents
+            << "|" << current->data->on_hand
+            << endl;
+        current = current->next;
+    }
+    
+}

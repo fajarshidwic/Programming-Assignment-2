@@ -27,6 +27,7 @@ void printMainMenu();
 void useLinkedList();
 
 bool loadItem(char **argv, LinkedList& vendingMachine);
+bool loadPopularItem(char **argv, LinkedList& vendingMachine);
 void splitString(string s, vector<string>& tokens, string delimiter);
 string readInput();
 string strip(std::string& s);
@@ -40,6 +41,7 @@ void purchaseItem(LinkedList& LinkedList);
 void displayBalance(LinkedList& vendingMachine);
 
 void saveItem(std::string outFileName, LinkedList& vendingMachine);
+void savePopularItem(std::string outFileName, LinkedList& vendingMachine);
 void saveCoin(std::string outFileName, LinkedList& vendingMachine);
 
 /**
@@ -56,18 +58,25 @@ int main(int argc, char **argv)
     LinkedList vendingMachine;
     bool allowedArgs = true;
     std::string foodsFile;
+    std::string popularFile;
     std::string coinsFile;
 
 
     // input validation
-    if (argc != 3) {
+    if (argc != 3 && argc != 4) {
         cout << "you entered the wrong arguments." << endl;
         allowedArgs = false;
     }
-    else {
+    else if (argc == 3){
         foodsFile = argv[1];
         coinsFile = argv[2];
         allowedArgs = loadItem(argv, vendingMachine);
+    } else {
+        foodsFile = argv[1];
+        coinsFile = argv[2];
+        popularFile = argv[3];
+        allowedArgs = loadItem(argv, vendingMachine);
+        allowedArgs = loadPopularItem(argv, vendingMachine);
     }
     
     string choice = "-1";
@@ -100,6 +109,7 @@ int main(int argc, char **argv)
                     exit = true;
                     std::cout << "Save and Exit" << std::endl;
                     saveItem(foodsFile, vendingMachine);
+                    savePopularItem(popularFile, vendingMachine);
                     saveCoin(coinsFile, vendingMachine);
 
                 } else if (std::stoi(choice) == 4) {
@@ -201,6 +211,48 @@ bool loadItem(char **argv, LinkedList& vendingMachine){
    else {
       allowedArgs = false;
       cout << "Unable to open coin file" << endl;
+   }
+
+   cout << "loaded" << endl;
+   return allowedArgs;
+}
+
+bool loadPopularItem(char **argv, LinkedList& vendingMachine){
+   // Reading the data inserted.
+   bool allowedArgs = true;
+   string popularDat = argv[3];
+   // Reading files
+   string foodLine;
+   // Save the food file as a linked list.
+   ifstream myfile(popularDat);
+   if (myfile.is_open()) {
+      while (getline(myfile, foodLine)) {
+            // Local variables
+            string food_id, food_name, food_desc;
+            double food_price;
+            int food_stock;
+            // Split string function by delimter.
+            std::vector<std::string> foodTokens;
+            string delimiter = "|";
+            splitString(foodLine,foodTokens,delimiter);
+            // Giving values
+            food_id = foodTokens[0];
+            food_name = foodTokens[1];
+            food_desc = foodTokens[2];
+            food_price = std::stod(foodTokens[3]);
+            food_stock = std::stoi(foodTokens[4]);
+
+            // Create node
+            FoodItem* item = new FoodItem(food_id, food_name, food_desc, food_price, food_stock);
+            // Append node to end of linked list
+            vendingMachine.addPopularItem(item);
+      }
+      // Failed to open
+      myfile.close();
+   }
+   else {
+      allowedArgs = false;
+      cout << "Unable to open stock file" << endl;
    }
 
    cout << "loaded" << endl;
@@ -467,6 +519,12 @@ void purchaseItem(LinkedList& LinkedList) {
 void saveItem(std::string outFileName, LinkedList& vendingMachine) {
    std::ofstream outfile(outFileName);
    vendingMachine.printItems(outfile);
+   outfile.close();
+}
+
+void savePopularItem(std::string outFileName, LinkedList& vendingMachine) {
+   std::ofstream outfile(outFileName);
+   vendingMachine.printPopularItems(outfile);
    outfile.close();
 }
 
