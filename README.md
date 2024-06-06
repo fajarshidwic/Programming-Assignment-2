@@ -1,2 +1,2 @@
 # Programming-Assignment-2
-Milestone 1 &amp; 2
+Milestone 3 individual enhancement
