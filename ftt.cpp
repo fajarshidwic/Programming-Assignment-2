@@ -88,6 +88,20 @@ int main(int argc, char **argv)
         printMainMenu();
         choice = readInput();
 
+        if (choice == "help") {
+            cout << "Type '1' to Display Meal Options" << endl;
+            cout << "Type '2' to Purchase Meal" << endl;
+            cout << "Type '3' to Save the Program and Exit" << endl;
+            cout << "Type '4' to Add Food Item to the Vending Machine" << endl;
+            cout << "Type '5' to Remove Food Item to the Vending Machine" << endl;
+            cout << "Type '6' to Display Balance" << endl;
+            cout << "Type '7' to Abort Program" << endl;
+            cout << "Type '8' to Display Popular Meal Options" << endl;
+            cout << endl;
+            printMainMenu();
+            choice = readInput();
+        }
+
         if (!std::cin.eof()) {
             bool isInt = true;
             // Menu Block
@@ -135,6 +149,16 @@ int main(int argc, char **argv)
                 } else if (std::stoi(choice) == 8) {
                     // Display Popular Items
                     vendingMachine.printPopularItems();
+                    cout << endl;
+                } else if (choice == "help") {
+                    cout << "Type '1' to Display Meal Options" << endl;
+                    cout << "Type '2' to Purchase Meal" << endl;
+                    cout << "Type '3' to Save the Program and Exit" << endl;
+                    cout << "Type '4' to Add Food Item to the Vending Machine" << endl;
+                    cout << "Type '5' to Remove Food Item to the Vending Machine" << endl;
+                    cout << "Type '6' to Display Balance" << endl;
+                    cout << "Type '7' to Abort Program" << endl;
+                    cout << "Type '8' to Display Popular Meal Options" << endl;
                     cout << endl;
                 } else if (!std::cin.eof()) {
                     // Invalid Input Number
@@ -308,30 +332,91 @@ void printMainMenu() {
 void addFoodItem(LinkedList& vendingMachine) {
 
     string itemID, itemName, itemDescription;
-    double itemPrice;
+    string itemPrice;
     int itemStock = DEFAULT_FOOD_STOCK_LEVEL;
 
     Node* node = vendingMachine.getBack();
     itemID = node->data->id;
 
+
     cout << "Enter the item name: ";
     getline(cin, itemName);
 
+    bool quit = false;
+
+    while (!quit){
+        if (itemName == "help") {
+            cout << "FOR EXAMPLE:" << endl;
+            cout << "Type 'pizza' to Add Pizza to the Meal Options" << endl;
+            cout << endl;
+            cout << "Enter the item name: ";
+            getline(cin, itemName);
+        } else {
+            quit = true;
+        }
+    }
+
     cout << "Enter the item description: ";
-    getline(cin, itemDescription);
+    getline(cin, itemDescription); 
+    quit = false;
+    while (!quit){ 
+        if (itemDescription == "help") {
+            cout << "FOR EXAMPLE:" << endl;
+            cout << "Type 'delicious and healthy' to Add Description of the Meal Options" << endl;
+            cout << endl;
+            cout << "Enter the item description: ";
+            getline(cin, itemDescription); 
+        } else {
+            quit = true;
+        }
+    }
 
-    cout << "Enter the price for this item (in cents): ";
-    cin >> itemPrice;
+    cout << "Enter the price for this item (in dollars): ";
+    cin >> itemPrice; 
 
-    FoodItem* item = new FoodItem(itemID, itemName, itemDescription, itemPrice, itemStock);
+    quit = false;
+    while (!quit){
+        if (itemPrice == "help") {
+            cout << "FOR EXAMPLE:" << endl;
+            cout << "Type '10' to Add 10$ as the Price of the Meal Options" << endl;
+            cout << endl;
+            cout << "Enter the price for this item (in dollars): ";
+            cin >> itemPrice;   
+        } else {
+            quit = true;
+        }
+    }
+
+    FoodItem* item = new FoodItem(itemID, itemName, itemDescription, stod(itemPrice), itemStock);
     vendingMachine.addBack(item);
 }
 
 void removeFoodItem(LinkedList& vendingMachine) {
     string itemID;
-
     cout << "Enter the food id of the food to remove from the menu: ";
     cin >> itemID;
+    bool quit = false;
+
+    while (!quit){
+        if (itemID == "help") {
+            vendingMachine.printItems();
+            cout << endl;
+
+            cout << "Type 'F0001' to Remove Baklava" << endl;
+            cout << "Type 'F0002' to Remove Gnocchi" << endl;
+            cout << "Type 'F0003' to Remove Haggis" << endl;
+            cout << "Type 'F0004' to Remove Jambalaya" << endl;
+            cout << "Type 'F0005' to Remove Bibimbab" << endl;
+            cout << "Type 'F0006' to Remove Fondue" << endl;
+            cout << "Type 'F0007' to Remove Kelewele" << endl;
+            cout << endl;
+
+            cout << "Enter the food id of the food to remove from the menu: ";
+            cin >> itemID;
+        } else {
+            quit = true;
+        }
+    }
 
     // TODO
     int index = vendingMachine.getIndex(itemID);
@@ -388,6 +473,25 @@ void purchaseItem(LinkedList& LinkedList) {
     bool quit = false;
     while (!quit) {
         std::getline(std::cin, itemId);
+
+        if (itemId == "help") {
+            LinkedList.printItems();
+            cout << endl;
+
+            cout << "Type 'F0001' to Purcase Baklava" << endl;
+            cout << "Type 'F0002' to Purcase Gnocchi" << endl;
+            cout << "Type 'F0003' to Purcase Haggis" << endl;
+            cout << "Type 'F0004' to Purcase Jambalaya" << endl;
+            cout << "Type 'F0005' to Purcase Bibimbab" << endl;
+            cout << "Type 'F0006' to Purcase Fondue" << endl;
+            cout << "Type 'F0007' to Purcase Kelewele" << endl;
+            cout << endl;
+
+            cout << "Purchase Item" << endl;
+            cout << "-------------" << endl;
+            cout << "Please enter the id of the item you wish to purchase:";
+            std::getline(std::cin, itemId);
+        }
         strip(itemId);
 
         if (itemId.length() > IDLEN) {
